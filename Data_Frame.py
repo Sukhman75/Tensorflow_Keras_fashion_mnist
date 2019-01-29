@@ -20,4 +20,17 @@ print(train_labels)
 print(test_image.shape)
 
 # Next step is to Preprocess the Data
+""" It will deiplay an example image and the pixel value from the test Data"""
 
+plt.figure()
+plt.imshow(train_image[0])
+plt.xlabel(train_labels[0])
+plt.colorbar()
+plt.show()
+
+#Now we will sacle the value from 0 to 255 to 0 to 1, by dividing the training and test images by 255.
+
+train_image = train_image/255.0
+test_image = test_image/255.0
+
+ 
