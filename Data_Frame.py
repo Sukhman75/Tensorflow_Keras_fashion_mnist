@@ -12,3 +12,12 @@ fashion_data = keras.datasets.fashion_mnist
 class_names = ['T-shirt/top', 'Trouser', 'Pullover', 'Dress', 'Coat',
                'Sandal', 'Shirt', 'Sneaker', 'Bag', 'Ankle boot']
 
+# To explore the data & to look deep into data
+
+print(train_image.shape)
+print(train_labels)
+
+print(test_image.shape)
+
+# Next step is to Preprocess the Data
+
