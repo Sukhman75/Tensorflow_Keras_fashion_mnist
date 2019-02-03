@@ -32,17 +32,6 @@ class_names = ['T-shirt/top', 'Trouser', 'Pullover', 'Dress', 'Coat',
 
 train_image = train_image/255.0
 test_image = test_image/255.0
-#	to display first 25 images from the data
-# plt.figure(figsize=(10,10))
-
-# for i in range(25):
-# 	plt.subplot(5,5,i+1)
-# 	plt.xticks([])
-# 	plt.yticks([])
-# 	plt.grid(False)
-# 	plt.imshow(train_image[i], cmap=plt.cm.binary)
-# 	plt.xlabel(class_names[train_labels[i]])
-# plt.show()
 
 #Building the Model
 
@@ -73,11 +62,11 @@ predictions = model.predict(test_image)
 
 print(predictions[0], '\n', np.argmax(predictions[0]))
 print(test_labels[0])
-# DO A PROPER PLOT OF PREDICTIONS
-
-plt.figure(figsize=(15,15))
-for i in range(20):
-	plt.subplot(5,4,i+1)
+#DO A PROPER PLOT OF PREDICTIONS
+ 
+plt.figure(figsize=(100,100))
+for i in range(30):
+	plt.subplot(6,5,i+1)
 	plt.xticks([])
 	plt.yticks([])
 	plt.grid(False)
