@@ -1,7 +1,10 @@
-
 import tensorflow as tf
 from tensorflow import keras 
-
+from keras.models import Sequential,Input,Model
+from keras.layers import Dense, Dropout, Flatten
+from keras.layers import Conv2D, MaxPooling2D
+from keras.layers.normalization import BatchNormalization
+from keras.layers.advanced_activations import LeakyReLU
 import numpy as np
 import matplotlib.pyplot as plt
 #Import the Fashion MNIST dataset from keras
@@ -32,17 +35,31 @@ class_names = ['T-shirt/top', 'Trouser', 'Pullover', 'Dress', 'Coat',
 
 train_image = train_image/255.0
 test_image = test_image/255.0
-
+test_image2 = test_image/255.0
+train_image = train_image.reshape(-1, 28,28, 1)
+test_image = test_image.reshape(-1, 28,28, 1)
 #Building the Model
 
 #For Layering 
 
-model = keras.Sequential([
-	keras.layers.Flatten(input_shape=(28,28)),
-	keras.layers.Dense(128, activation = tf.nn.relu),
-	keras.layers.Dense(10, activation = tf.nn.softmax)
-]) 
+model = Sequential()
+model.add(Conv2D(32, kernel_size=(3, 3),activation='linear',input_shape=(28,28,1),padding='same'))
+model.add(LeakyReLU(alpha=0.1))
+model.add(MaxPooling2D((2, 2),padding='same'))
+model.add(Conv2D(64, (3, 3), activation='linear',padding='same'))
+model.add(LeakyReLU(alpha=0.1))
+model.add(MaxPooling2D(pool_size=(2, 2),padding='same'))
+model.add(Conv2D(128, (3, 3), activation='linear',padding='same'))
+model.add(LeakyReLU(alpha=0.1))                  
+model.add(MaxPooling2D(pool_size=(2, 2),padding='same'))
+model.add(Flatten())
+model.add(Dense(128, activation='linear'))
+model.add(LeakyReLU(alpha=0.1))                  
+model.add(Dense(10, activation='softmax'))
+
+
 #BEFORE TRAINING AND TESTING COMPILE THE MODEL
+
 model.compile(optimizer='adam',
               loss='sparse_categorical_crossentropy',
               metrics=['accuracy'])
@@ -73,7 +90,7 @@ for i in range(30):
 	predict_max = 100*np.max(predictions[i])
 	real_class = class_names[test_labels[i]]
 	predict_class = class_names[np.argmax(predictions[i])] 
-	plt.imshow(test_image[i], cmap=plt.cm.binary)
+	plt.imshow(test_image2[i], cmap=plt.cm.binary)
 	if test_labels[i] == np.argmax(predictions[i]):
 		color = 'blue'
 	else:
@@ -82,6 +99,3 @@ for i in range(30):
 	
 	plt.xlabel("{} {:2.0f}% ({})".format(predict_class, predict_max, real_class), color = color)
 plt.show()
-
-
-
